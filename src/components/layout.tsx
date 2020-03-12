@@ -4,14 +4,20 @@ import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
 import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
+import PersonIcon from "@material-ui/icons/Person";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
+import AnnouncementIcon from "@material-ui/icons/Announcement";
+import DashboardIcon from "@material-ui/icons/Dashboard";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Users from "./users";
+import AddUser from "./addUser";
+import Announcements from "./announcement";
 
 const drawerWidth = 240;
 
@@ -51,50 +57,63 @@ export default function ClippedDrawer() {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="permanent"
-        classes={{
-          paper: classes.drawerPaper
-        }}
-      >
-        <div className={classes.toolbar} />
-        <List></List>
-        <Divider />
-        <List></List>
-      </Drawer>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
-          dolor purus non enim praesent elementum facilisis leo vel. Risus at
-          ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum
-          quisque non tellus. Convallis convallis tellus id interdum velit
-          laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed
-          adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
-          integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
-          eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
-          quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
-          vivamus at augue. At augue eget arcu dictum varius duis at consectetur
-          lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien
-          faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-          ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-          elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-          sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-          mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-          risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-          purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-          tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-          morbi tristique senectus et. Adipiscing elit duis tristique
-          sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
-      </main>
+      <Router>
+        <Drawer
+          className={classes.drawer}
+          variant="permanent"
+          classes={{
+            paper: classes.drawerPaper
+          }}
+        >
+          <div className={classes.toolbar} />
+
+          <List>
+            <ListItem button component={Link} to={"/"}>
+              <ListItemIcon>
+                <DashboardIcon />
+              </ListItemIcon>
+              <ListItemText primary="Strona główna" />
+            </ListItem>
+            <ListItem button component={Link} to={"/users"}>
+              <ListItemIcon>
+                <PersonIcon />
+              </ListItemIcon>
+              <ListItemText primary="Uczestnicy" />
+            </ListItem>
+            <ListItem button component={Link} to="/addUser">
+              <ListItemIcon>
+                <PersonAddIcon />
+              </ListItemIcon>
+              <ListItemText primary="Nowy uczestnik" />
+            </ListItem>
+            <ListItem button component={Link} to="/announce">
+              <ListItemIcon>
+                <AnnouncementIcon />
+              </ListItemIcon>
+              <ListItemText primary="Ważne komunikaty" />
+            </ListItem>
+          </List>
+
+          <Divider />
+        </Drawer>
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+          <Switch>
+            <Route path="/users">
+              <Users />
+            </Route>
+            <Route path="/addUser">
+              <AddUser />
+            </Route>
+            <Route path="/announce">
+              <Announcements />
+            </Route>
+            <Route path="/">
+              <div>"Dashboard hollow"</div>
+            </Route>
+          </Switch>
+        </main>
+      </Router>
     </div>
   );
 }
