@@ -4,20 +4,12 @@ import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
-import ListItem from "@material-ui/core/ListItem";
-import PersonIcon from "@material-ui/icons/Person";
-import PersonAddIcon from "@material-ui/icons/PersonAdd";
-import AnnouncementIcon from "@material-ui/icons/Announcement";
-import DashboardIcon from "@material-ui/icons/Dashboard";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Users from "./users";
-import AddUser from "./addUser";
-import Announcements from "./announcement";
+import { BrowserRouter as Router } from "react-router-dom";
+import NavigationList from "./navigationList";
+import ContentSwitch from "./contentSwitch";
+import NavigationData from "../data/navigation";
 
 const drawerWidth = 240;
 
@@ -66,52 +58,12 @@ export default function ClippedDrawer() {
           }}
         >
           <div className={classes.toolbar} />
-
-          <List>
-            <ListItem button component={Link} to={"/"}>
-              <ListItemIcon>
-                <DashboardIcon />
-              </ListItemIcon>
-              <ListItemText primary="Strona główna" />
-            </ListItem>
-            <ListItem button component={Link} to={"/users"}>
-              <ListItemIcon>
-                <PersonIcon />
-              </ListItemIcon>
-              <ListItemText primary="Uczestnicy" />
-            </ListItem>
-            <ListItem button component={Link} to="/addUser">
-              <ListItemIcon>
-                <PersonAddIcon />
-              </ListItemIcon>
-              <ListItemText primary="Nowy uczestnik" />
-            </ListItem>
-            <ListItem button component={Link} to="/announce">
-              <ListItemIcon>
-                <AnnouncementIcon />
-              </ListItemIcon>
-              <ListItemText primary="Ważne komunikaty" />
-            </ListItem>
-          </List>
-
+          <NavigationList navElements={NavigationData} />
           <Divider />
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Switch>
-            <Route path="/users">
-              <Users />
-            </Route>
-            <Route path="/addUser">
-              <AddUser />
-            </Route>
-            <Route path="/announce">
-              <Announcements />
-            </Route>
-            <Route path="/">
-              <div>"Dashboard hollow"</div>
-            </Route>
-          </Switch>
+          <ContentSwitch />
         </main>
       </Router>
     </div>
