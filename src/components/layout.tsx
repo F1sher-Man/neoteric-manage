@@ -63,7 +63,7 @@ export default function ClippedDrawer() {
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <ContentSwitch />
+          <ContentSwitch NavRoute={NavigationData} />
         </main>
       </Router>
     </div>

@@ -1,24 +1,30 @@
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import PersonIcon from "@material-ui/icons/Person";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
+import Users from "../components/users";
+import AddUser from "../components/addUser";
+import Annoucemenets from "../components/announcement";
 
 const navigation = [
   {
     link: "/",
     desc: "Strona główna",
-    Icon: DashboardIcon
+    Icon: DashboardIcon,
+    Content: Annoucemenets
   },
 
   {
     link: "/users",
     desc: "Uczestnicy",
-    Icon: PersonIcon
+    Icon: PersonIcon,
+    Content: Users
   },
 
   {
     link: "/addUser",
     desc: "Nowy uczestnik",
-    Icon: PersonAddIcon
+    Icon: PersonAddIcon,
+    Content: AddUser
   }
 ];
 

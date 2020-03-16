@@ -1,26 +1,22 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import Users from "./users";
-import AddUser from "./addUser";
-import Announcements from "./announcement";
 
-export interface ContentSwitchProps {}
+type NavItem = {
+  link: string;
+  Content: React.FC;
+};
 
-const ContentSwitch: React.SFC<ContentSwitchProps> = props => {
+export interface ContentSwitchProps {
+  NavRoute: Array<NavItem>;
+}
+
+const ContentSwitch: React.FC<ContentSwitchProps> = props => {
+  const NavRoute = props.NavRoute.reverse();
   return (
     <Switch>
-      <Route path="/users">
-        <Users />
-      </Route>
-      <Route path="/addUser">
-        <AddUser />
-      </Route>
-      <Route path="/announce">
-        <Announcements />
-      </Route>
-      <Route path="/">
-        <div>"Dashboard hollow"</div>
-      </Route>
+      {NavRoute.map(route => {
+        return <Route path={route.link}>{<route.Content />}</Route>;
+      })}
     </Switch>
   );
 };
