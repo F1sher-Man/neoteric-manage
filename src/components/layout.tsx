@@ -58,7 +58,7 @@ export default function ClippedDrawer() {
           }}
         >
           <div className={classes.toolbar} />
-          <NavigationList navElements={NavigationData} />
+          <NavigationList navItems={NavigationData} />
           <Divider />
         </Drawer>
         <main className={classes.content}>

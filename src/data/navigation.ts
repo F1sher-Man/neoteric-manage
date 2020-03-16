@@ -6,19 +6,19 @@ const navigation = [
   {
     link: "/",
     desc: "Strona główna",
-    icon: DashboardIcon
+    Icon: DashboardIcon
   },
 
   {
     link: "/users",
     desc: "Uczestnicy",
-    icon: PersonIcon
+    Icon: PersonIcon
   },
 
   {
     link: "/addUser",
     desc: "Nowy uczestnik",
-    icon: PersonAddIcon
+    Icon: PersonAddIcon
   }
 ];
 
