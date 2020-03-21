@@ -3,7 +3,7 @@ import { Switch, Route } from "react-router-dom";
 
 type NavItem = {
   link: string;
-  Content: React.FC;
+  Content: React.FC | React.ReactNode | React.ElementType;
 };
 
 export interface ContentSwitchProps {
@@ -15,7 +15,8 @@ const ContentSwitch: React.FC<ContentSwitchProps> = props => {
   return (
     <Switch>
       {NavRoute.map(route => {
-        return <Route path={route.link}>{<route.Content />}</Route>;
+        return <Route path={route.link}>{route.Content}</Route>;
+        // return <Route path={route.link}{<route.Content />}></Route>;
       })}
     </Switch>
   );
