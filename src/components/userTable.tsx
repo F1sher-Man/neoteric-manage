@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -9,12 +9,19 @@ import TableRow from "@material-ui/core/TableRow";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
 import Paper from "@material-ui/core/Paper";
+import InputLabel from "@material-ui/core/InputLabel";
 import { IUser } from "../data/users";
 
 const useStyles = makeStyles({
   table: {
     minWidth: 650
+  },
+  formControl: {
+    minWidth: 120
   }
 });
 
@@ -27,6 +34,8 @@ const UserTable: React.FC<userTableProps> = ({ usersData }) => {
   const [onlyActiveUsers, setOnlyActiveUsers] = useState(false);
   const [displayUsers, setDisplayUsers] = useState(usersData);
   const [nameSortDirection, setNameSortDirection] = useState("desc");
+  const [technologyFilter, setTechnologyFilter] = useState("all");
+  const rowsCount = displayUsers.length;
 
   function handleActiveUserFilter() {
     setOnlyActiveUsers(!onlyActiveUsers);
@@ -44,24 +53,38 @@ const UserTable: React.FC<userTableProps> = ({ usersData }) => {
   function handleOrderStringColumn(column: string) {
     let tempUsers;
     if (nameSortDirection === "desc") {
-      tempUsers = [...displayUsers].sort(
-        (a, b) => a[column].localeCompare(b[column])
-        // a["first_name"].localeCompare(b["first_name"])
+      tempUsers = [...displayUsers].sort((a, b) =>
+        a[column].localeCompare(b[column])
       );
       setNameSortDirection("asc");
     } else {
-      tempUsers = [...displayUsers].sort(
-        (a, b) => b[column].localeCompare(a[column])
-        // a["first_name"].localeCompare(b["first_name"])
+      tempUsers = [...displayUsers].sort((a, b) =>
+        b[column].localeCompare(a[column])
       );
       setNameSortDirection("desc");
     }
     setDisplayUsers(tempUsers);
   }
 
+  const handleTechnologyStackChange = (
+    event: React.ChangeEvent<{ value: unknown }>
+  ) => {
+    let newUsers;
+    let value: string = event.target.value as string;
+    if (value !== "all") {
+      newUsers = usersData.filter(user => {
+        return user.tech === value ? user : null;
+      });
+    } else {
+      newUsers = usersData;
+    }
+    setDisplayUsers(newUsers);
+    setTechnologyFilter(value);
+  };
   return (
     <div>
       <FormGroup row>
+        <p style={{ paddingRight: "50px" }}>{rowsCount} wyników</p>
         <FormControlLabel
           control={
             <Switch
@@ -72,7 +95,22 @@ const UserTable: React.FC<userTableProps> = ({ usersData }) => {
           }
           label="Tylko aktywni użytkownicy"
         />
+        <FormControl className={classes.formControl}>
+          <InputLabel id="demo-simple-select-label">Technologia</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={technologyFilter}
+            onChange={handleTechnologyStackChange}
+          >
+            <MenuItem value={"all"}>Wszystkie</MenuItem>
+            <MenuItem value={"AI"}>AI</MenuItem>
+            <MenuItem value={"angular"}>Angular</MenuItem>
+            <MenuItem value={"react"}>React</MenuItem>
+          </Select>
+        </FormControl>
       </FormGroup>
+
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
@@ -81,18 +119,21 @@ const UserTable: React.FC<userTableProps> = ({ usersData }) => {
               <TableCell
                 align="center"
                 onClick={() => handleOrderStringColumn("first_name")}
+                style={{ cursor: "pointer" }}
               >
                 Imię
               </TableCell>
               <TableCell
                 align="center"
                 onClick={() => handleOrderStringColumn("last_name")}
+                style={{ cursor: "pointer" }}
               >
                 Nazwisko
               </TableCell>
               <TableCell
                 align="center"
                 onClick={() => handleOrderStringColumn("email")}
+                style={{ cursor: "pointer" }}
               >
                 E-mail
               </TableCell>
