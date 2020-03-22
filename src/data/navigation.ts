@@ -1,7 +1,7 @@
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import PersonIcon from "@material-ui/icons/Person";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
-import Users from "../components/users";
+import Users from "../components/userTable";
 import AddUser from "../components/addUser";
 import Annoucemenets from "../components/announcement";
 

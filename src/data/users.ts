@@ -1,14 +1,15 @@
-type user = {
-  id: number;
+export interface IUser {
+  [key: string]: string | any;
   first_name: string;
   last_name: string;
   email: string;
+  id: number;
   tech: string;
   isActive: boolean;
   note: string;
-};
+}
 
-const users: Array<user> = [
+const users: Array<IUser> = [
   {
     id: 1,
     first_name: "Ludwig",
