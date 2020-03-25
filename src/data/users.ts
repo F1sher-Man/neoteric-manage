@@ -1,5 +1,5 @@
 export interface IUser {
-  [key: string]: string | any;
+  [key: string]: string | boolean | number;
   first_name: string;
   last_name: string;
   email: string;

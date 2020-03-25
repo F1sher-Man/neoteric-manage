@@ -14,10 +14,12 @@ export interface NavigationListProps {
 }
 
 const NavigationList: React.FC<NavigationListProps> = props => {
+  let listId = 0;
   return (
     <List>
       {props.navItems.map(item => {
-        return <NavItem Item={item} />;
+        listId++;
+        return <NavItem key={listId} Item={item} />;
       })}
     </List>
   );

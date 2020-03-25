@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -53,14 +53,18 @@ const UserTable: React.FC<userTableProps> = ({ usersData }) => {
   function handleOrderStringColumn(column: string) {
     let tempUsers;
     if (nameSortDirection === "desc") {
-      tempUsers = [...displayUsers].sort((a, b) =>
-        a[column].localeCompare(b[column])
-      );
+      tempUsers = [...displayUsers].sort((a, b) => {
+        const valueToCompare = a[column] as string;
+        const valueToCompare2 = b[column] as string;
+        return valueToCompare.localeCompare(valueToCompare2);
+      });
       setNameSortDirection("asc");
     } else {
-      tempUsers = [...displayUsers].sort((a, b) =>
-        b[column].localeCompare(a[column])
-      );
+      tempUsers = [...displayUsers].sort((a, b) => {
+        const valueToCompare = a[column] as string;
+        const valueToCompare2 = b[column] as string;
+        return valueToCompare.localeCompare(valueToCompare2);
+      });
       setNameSortDirection("desc");
     }
     setDisplayUsers(tempUsers);
