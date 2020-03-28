@@ -1,26 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
 import { Switch, Route } from "react-router-dom";
-import UserData from "../data/users";
+
 import Users from "./userTable";
 import AddUser from "../components/addUser";
 import Annoucemenets from "../components/announcement";
+import { IUser } from "../data/users";
 
-type NavItem = {
-  link: string;
-  Content: React.FC;
-};
+interface ContentSwitchProps {
+  allUsers: Array<IUser>;
+  handleAddUser(newUser: IUser): void;
+}
 
-interface ContentSwitchProps {}
-
-const ContentSwitch: React.FC<ContentSwitchProps> = () => {
-  const [users] = useState(UserData);
+const ContentSwitch: React.FC<ContentSwitchProps> = ({
+  allUsers,
+  handleAddUser
+}) => {
   return (
     <Switch>
       <Route path="/users">
-        <Users usersData={users} />
+        <Users usersData={allUsers} />
       </Route>
       <Route path="/addUser">
-        <AddUser />
+        <AddUser onUserAdd={handleAddUser} />
       </Route>
       <Route path="/">
         <Annoucemenets />

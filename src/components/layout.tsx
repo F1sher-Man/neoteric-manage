@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
@@ -10,6 +10,8 @@ import { BrowserRouter as Router } from "react-router-dom";
 import NavigationList from "./navigationList";
 import ContentSwitch from "./contentSwitch";
 import NavigationData from "../data/navigation";
+import UserData from "../data/users";
+import { IUser } from "../data/users";
 
 const drawerWidth = 240;
 
@@ -37,7 +39,16 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export default function ClippedDrawer() {
+  const [users, setUsers] = useState(UserData);
   const classes = useStyles();
+
+  function AddUser(newUser: IUser) {
+    newUser.id = users.length + 1;
+    const allUsers = users;
+    allUsers.push(newUser);
+    setUsers(allUsers);
+    alert("User added successfully!");
+  }
 
   return (
     <div className={classes.root}>
@@ -63,7 +74,7 @@ export default function ClippedDrawer() {
         </Drawer>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <ContentSwitch />
+          <ContentSwitch allUsers={users} handleAddUser={AddUser} />
         </main>
       </Router>
     </div>
