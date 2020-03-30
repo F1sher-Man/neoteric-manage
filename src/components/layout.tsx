@@ -12,6 +12,7 @@ import ContentSwitch from "./contentSwitch";
 import NavigationData from "../data/navigation";
 import UserData from "../data/users";
 import { IUser } from "../data/users";
+import UserMessages from "../const/userMessages.const";
 
 const drawerWidth = 240;
 
@@ -42,12 +43,12 @@ export default function ClippedDrawer() {
   const [users, setUsers] = useState(UserData);
   const classes = useStyles();
 
-  function AddUser(newUser: IUser) {
+  function AddUser(newUser: IUser): void {
     newUser.id = users.length + 1;
     const allUsers = users;
     allUsers.push(newUser);
     setUsers(allUsers);
-    alert("User added successfully!");
+    alert(UserMessages.USER_ADDED_SUCCEED);
   }
 
   return (

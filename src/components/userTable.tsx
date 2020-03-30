@@ -37,12 +37,12 @@ const UserTable: React.FC<userTableProps> = ({ usersData }) => {
   const [technologyFilter, setTechnologyFilter] = useState("all");
   const rowsCount = displayUsers.length;
 
-  function handleActiveUserFilter() {
+  function handleActiveUserFilter(): void {
     setOnlyActiveUsers(!onlyActiveUsers);
     let newUsers;
     if (!onlyActiveUsers) {
       newUsers = displayUsers.filter(user => {
-        return user.isActive === true ? user : null;
+        return user.isActive ? user : null;
       });
     } else {
       newUsers = usersData;
@@ -50,7 +50,7 @@ const UserTable: React.FC<userTableProps> = ({ usersData }) => {
     setDisplayUsers(newUsers);
   }
 
-  function handleOrderStringColumn(column: string) {
+  function handleOrderStringColumn(column: string): void {
     let tempUsers;
     if (nameSortDirection === "desc") {
       tempUsers = [...displayUsers].sort((a, b) => {
@@ -72,7 +72,7 @@ const UserTable: React.FC<userTableProps> = ({ usersData }) => {
 
   const handleTechnologyStackChange = (
     event: React.ChangeEvent<{ value: unknown }>
-  ) => {
+  ): void => {
     let newUsers;
     let value: string = event.target.value as string;
     if (value !== "all") {
@@ -122,21 +122,21 @@ const UserTable: React.FC<userTableProps> = ({ usersData }) => {
               <TableCell align="center">Id</TableCell>
               <TableCell
                 align="center"
-                onClick={() => handleOrderStringColumn("first_name")}
+                onClick={(): void => handleOrderStringColumn("first_name")}
                 style={{ cursor: "pointer" }}
               >
                 Imię
               </TableCell>
               <TableCell
                 align="center"
-                onClick={() => handleOrderStringColumn("last_name")}
+                onClick={(): void => handleOrderStringColumn("last_name")}
                 style={{ cursor: "pointer" }}
               >
                 Nazwisko
               </TableCell>
               <TableCell
                 align="center"
-                onClick={() => handleOrderStringColumn("email")}
+                onClick={(): void => handleOrderStringColumn("email")}
                 style={{ cursor: "pointer" }}
               >
                 E-mail
@@ -147,10 +147,9 @@ const UserTable: React.FC<userTableProps> = ({ usersData }) => {
           </TableHead>
           <TableBody>
             {displayUsers.map(user => {
-              let rowColor: string =
-                user.isActive === true
-                  ? "rgba(0,255,0,0.3)"
-                  : "rgba(255,0,0,0.3)";
+              let rowColor: string = user.isActive
+                ? "rgba(0,255,0,0.3)"
+                : "rgba(255,0,0,0.3)";
               return (
                 <TableRow key={user.id} style={{ backgroundColor: rowColor }}>
                   <TableCell align="center">{user.id}</TableCell>

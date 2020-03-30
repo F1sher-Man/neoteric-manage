@@ -8,6 +8,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
 import FormControl from "@material-ui/core/FormControl";
 import { IUser } from "../data/users";
+import UserMessages from "../const/userMessages.const";
+import AddUserEnum from "../enum/addUser.enum";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -45,42 +47,47 @@ const AddUser: React.FC<addUserProps> = ({ onUserAdd }) => {
   const [tech, setTech] = useState<InputField>({ value: "", error: false });
   const [note, setNote] = useState<string>("");
 
-  function checkIfNotEmpty(
-    event: React.ChangeEvent<{ value: unknown }>
-  ): InputField {
-    const value: string = event.target.value as string;
-    const newState: InputField = { value: value, error: false };
-    if (!value) newState.error = true;
+  function checkIfNotEmpty(elementValue: string): InputField {
+    const newState: InputField = { value: elementValue, error: false };
+    if (elementValue) newState.error = true;
     return newState;
   }
 
-  const handleNameChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    const newName: InputField = checkIfNotEmpty(event);
+  const handleNameChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    const newName: InputField = checkIfNotEmpty(event.target.value);
     setName(newName);
   };
   const handleLastnameChange = (
-    event: React.ChangeEvent<{ value: unknown }>
-  ) => {
-    const newLastname: InputField = checkIfNotEmpty(event);
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    const newLastname: InputField = checkIfNotEmpty(event.target.value);
     setLastname(newLastname);
   };
 
-  const handleEmailChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    const newEmail: InputField = checkIfNotEmpty(event);
+  const handleEmailChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    const newEmail: InputField = checkIfNotEmpty(event.target.value);
     setEmail(newEmail);
   };
-  const handleTechChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    const newTech: InputField = checkIfNotEmpty(event);
+  const handleTechChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    const newTech: InputField = checkIfNotEmpty(event.target.value);
     setTech(newTech);
   };
-  const handleNoteChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handleNoteChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     const value: string = event.target.value as string;
     setNote(value);
   };
 
-  function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
+  function handleFormSubmit(event: React.FormEvent<HTMLFormElement>): void {
     if ((name.value && lastname.value && email.value && tech.value) === "") {
-      alert("Please fill in all required fields.");
+      alert(UserMessages.ALL_FIELDS_REQUIRED);
       event.preventDefault();
     } else {
       const newUser: IUser = {
@@ -115,7 +122,7 @@ const AddUser: React.FC<addUserProps> = ({ onUserAdd }) => {
           >
             <TextField
               id="name"
-              label="Imię"
+              label={AddUserEnum.FIRST_NAME}
               value={name.value}
               onChange={handleNameChange}
               variant="outlined"
@@ -124,7 +131,7 @@ const AddUser: React.FC<addUserProps> = ({ onUserAdd }) => {
             />
             <TextField
               id="lastname"
-              label="Nazwisko"
+              label={AddUserEnum.LAST_NAME}
               value={lastname.value}
               onChange={handleLastnameChange}
               variant="outlined"
@@ -133,7 +140,7 @@ const AddUser: React.FC<addUserProps> = ({ onUserAdd }) => {
             />
             <TextField
               id="email"
-              label="E-mail"
+              label={AddUserEnum.FIRST_NAME}
               value={email.value}
               onChange={handleEmailChange}
               variant="outlined"
@@ -144,7 +151,7 @@ const AddUser: React.FC<addUserProps> = ({ onUserAdd }) => {
               <TextField
                 id="tech"
                 select
-                label="Technologia"
+                label={AddUserEnum.E_MAIL}
                 value={tech.value}
                 onChange={handleTechChange}
                 helperText="Wybierz technologię uczestnika"
@@ -159,8 +166,8 @@ const AddUser: React.FC<addUserProps> = ({ onUserAdd }) => {
             </FormControl>
             <TextField
               id="note"
-              label="Notatka"
-              placeholder="Tutaj możesz wpisać dodatkową notatkę o użytkowniku"
+              label={AddUserEnum.NOTE}
+              placeholder={UserMessages.ADDITIONAL_USER_NOTE}
               value={note}
               onChange={handleNoteChange}
               rows="5"

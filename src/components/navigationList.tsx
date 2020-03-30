@@ -6,7 +6,7 @@ import { SvgIconProps } from "@material-ui/core/SvgIcon";
 interface element {
   link: string;
   desc: string;
-  Icon: React.ReactType<SvgIconProps>;
+  Icon: React.ComponentType<SvgIconProps>;
 }
 
 export interface NavigationListProps {
@@ -14,12 +14,10 @@ export interface NavigationListProps {
 }
 
 const NavigationList: React.FC<NavigationListProps> = props => {
-  let listId = 0;
   return (
     <List>
-      {props.navItems.map(item => {
-        listId++;
-        return <NavItem key={listId} Item={item} />;
+      {props.navItems.map((item, index) => {
+        return <NavItem key={index} Item={item} />;
       })}
     </List>
   );

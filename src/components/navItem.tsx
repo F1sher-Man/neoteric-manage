@@ -9,7 +9,7 @@ interface INavItemProps {
   Item: {
     link: string;
     desc: string;
-    Icon: React.ReactType<SvgIconProps>;
+    Icon: React.ComponentType<SvgIconProps>;
   };
 }
 
